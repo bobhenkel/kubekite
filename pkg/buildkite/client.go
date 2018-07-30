@@ -63,25 +63,14 @@ func watchBuildkiteJobs(ctx context.Context, wg *sync.WaitGroup, client *buildki
 		}
 
 		for _, build := range builds {
-
-			// log.Printf("Build --> %v [%v]\n", *build.ID, *build.State)
-
 			for _, job := range build.Jobs {
-
-				// if job.State != nil {
-				// 	log.Printf("Job --> %v [%v]\n", *job.ID, *job.State)
-				// }
-
 				if job.State != nil && *job.State == "scheduled" {
 					jobChan <- *job.ID
 				}
-
 			}
-
 		}
 
 		time.Sleep(15 * time.Second)
 
 	}
-
 }
