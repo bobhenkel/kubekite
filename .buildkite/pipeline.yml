@@ -1,0 +1,16 @@
+steps:
+  - label : ":kubekite: Build Binary"
+    command: "./.buildkite/scripts/build-binary.sh"
+
+  - wait
+
+  - label: ":kubekite: Build Image"
+    command: "./.buildkite/scripts/build-image.sh"
+    env:
+      IMAGE_NAME: 024376647576.dkr.ecr.us-east-1.amazonaws.com/kubekite
+      AWS_ECR_LOGIN: true
+
+  - wait
+
+  - label: ":kubekite: Deploy to Kube"
+    command: "./.buildkite/scripts/deploy-image.sh"
